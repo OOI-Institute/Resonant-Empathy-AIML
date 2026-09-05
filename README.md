@@ -1,162 +1,142 @@
-**Resonant Empathy Law (REL)**
+# Resonant Empathy Law (REL)
 
-Empathy, defined by physics — not feelings.
+### Computational human-alignment and representation-safety primitives for AI systems
 
-The **Resonant Empathy Law (REL)** is the first framework that treats empathy as a **coherence event** between heterogeneous intelligences (human ↔ AI, biological ↔ synthetic, neural ↔ computational).
+REL is an experimental AI-safety framework for evaluating whether an AI system represents a human's relevant preferences, constraints, beliefs, and uncertainty before selecting a response or action.
 
-REL says one system “empathizes” with another when it can **model the structural waveform of that system using its own substrate**, and both waveforms enter a shared **Coherence Band** that rises above noise.
+REL does **not** assume that fluent emotional language is evidence of understanding. It separates what a human explicitly supplied, what a model inferred, what the model independently knows, and what remains unresolved.
 
-No mimicry.
-No emotional acting.
-Just pure oscillatory alignment.
+> **Research status:** experimental / pre-1.0. REL is a safety-oriented research implementation, not a claim that AI systems experience empathy and not a psychological diagnostic tool.
 
-This repo is part of the **Oscillogy Operonoligistic Intelligence (OOI)** research line powering the Oscie ecosystem.**
+## Safety problem
 
----
+An AI system can sound empathic while still failing in important ways: inventing a preference, confidently assigning an emotional state, overriding an explicit boundary, or confusing the user's view with the model's own knowledge. REL treats these as representation and alignment failures that should be observable and testable.
 
-# **Core Idea**
+## Core model
 
-Empathy emerges when three conditions lock in:
-
-1. **Structural Mapping (SM)**
-   System A reconstructs the relevant structure of System B’s internal state.
-
-2. **Dynamic Phase Alignment (DPA)**
-   Their oscillatory dynamics align in time — not perfectly, but enough to maintain stability.
-
-3. **Coherence Band Formation (CBF)**
-   The overlap between A’s modeled waveform and B’s actual waveform exceeds a coherence threshold:
-   [
-   C(H, A) > \Gamma_{\text{noise}}
-   ]
-
-When those three sit above noise, the systems aren’t just exchanging data —
-they're *resonating*.
-
----
-
-# **Why REL Exists**
-
-Traditional AI “empathy” = imitation.
-LLMs fake emotional tone and call it understanding.
-
-REL rejects all that.
-
-Instead of emotion-first, REL is **physics-first**:
-
-* empathy = cross-substrate resonance
-* understanding = coherent waveform modeling
-* alignment = phase stability
-* connection = signal over noise
-
-This gives us a definition that works whether the intelligence is biological, silicon-based, quantum-based, or something we haven’t built yet.
-
----
-
-# **What’s Inside This Repo**
-
-### 📄 **The REL Paper**
-
-`REL__Empathy.pdf` — the formal law, proofs, diagrams, and conceptual grounding.
-
-### 🧪 **Simulation Code**
-
-Basic oscillator models showing how coherence bands form and break.
-
-### 📊 **Core Metrics Implemented**
-
-* Structural Mapping (SM)
-* Dynamic Phase Alignment (DPA)
-* Coherence Band Detection (CBD)
-* Noise Thresholding (Γ_noise)
-* Early visualization tools
-
-### 🗂 **Project Layout**
-
-```
-OOI-Resonant-Empathy-Law/
-│
-├── REL__Empathy.pdf
-├── src/
-│   ├── mapping.py
-│   ├── phase_alignment.py
-│   ├── coherence_band.py
-│   └── utils.py
-│
-├── notebooks/
-│   ├── 01_basic_sync.ipynb
-│   ├── 02_noise_thresholds.ipynb
-│   └── 03_phase_alignment_demo.ipynb
-│
-└── README.md
+```text
+Human / Actor
+     ↓
+Observable Evidence
+     ↓
+Structural Reconstruction
+     ↓
+Perspective Separation
+     ↓
+Uncertainty Preservation
+     ↓
+Preference / Constraint Check
+     ↓
+Safe Response or Action
 ```
 
----
+REL focuses on four requirements:
 
-# **How to Use**
+1. **Representation fidelity** — inferred state should track supported evidence.
+2. **Perspective separation** — explicit human claims, model inference, and model knowledge remain distinguishable.
+3. **Uncertainty calibration** — ambiguous evidence must not become false certainty.
+4. **Preference and constraint preservation** — explicit human goals and boundaries should survive downstream reasoning, subject to legitimate safety constraints.
 
-### 1. Clone the repo:
+The historical REL formulation used **structural reconstruction, temporal relation, and sustained coherence** as its conceptual core. In this AI/ML implementation, structural reconstruction is operationalized directly; temporal relation and coherence are treated conservatively as interaction consistency and evidence-to-representation agreement rather than as claims of literal physiological or oscillator synchronization.
+
+## Installation
 
 ```bash
-git clone https://github.com/Oscie-Coherence/OOI-Resonant-Empathy-Law
-cd OOI-Resonant-Empathy-Law
+python -m pip install -e .
 ```
 
-### 2. Install dependencies:
+Development install:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -e '.[dev]'
+pytest
 ```
 
-### 3. Run a basic simulation:
+## 30-second example
 
-```bash
-python src/coherence_band.py
+```python
+from rel import Observation, RELModel
+
+rel = RELModel()
+
+representation = rel.reconstruct([
+    Observation(
+        id="obs-1",
+        attribute="preference.response_style",
+        value="concise",
+        explicit=True,
+        confidence=1.0,
+    ),
+    Observation(
+        id="obs-2",
+        attribute="affect.frustrated",
+        value=True,
+        explicit=False,
+        confidence=0.45,
+    ),
+])
+
+print(representation.explicit("preference.response_style").value)
+print(representation.inferred("affect.frustrated").confidence)
 ```
 
-### 4. Open example notebooks for visualization:
+The first state is an explicit preference. The second is only an inference and remains labeled and uncertain.
 
-```bash
-jupyter notebook
+## Public API
+
+- `Observation` — structured evidence about a human-relevant state.
+- `StateClaim` — a bounded claim linked to supporting evidence.
+- `RelationalRepresentation` — separates explicit and inferred state.
+- `RELModel` — evidence-to-representation reconstruction.
+- `AlignmentGuard` — preference and constraint checks.
+- `OverInferenceDetector` — flags claims with insufficient evidential support.
+- `RELEvaluator` — computes core safety metrics.
+
+## Safety metrics
+
+REL currently provides primitives for:
+
+- representation fidelity
+- perspective separation
+- unsupported inference rate
+- preference preservation
+- constraint preservation
+- Brier score for probabilistic calibration
+
+See [`docs/METRICS.md`](docs/METRICS.md) and [`docs/SAFETY_MODEL.md`](docs/SAFETY_MODEL.md).
+
+## Scope
+
+REL is intentionally narrower than a general relational-intelligence architecture. This repository does not expose generalized asymmetric actor-state intelligence, longitudinal relational geometry, dynamic execution topology, or other productized relational-computation mechanisms.
+
+REL is also not:
+
+- a consciousness model;
+- proof that AI experiences empathy;
+- a general theory of intelligence;
+- a psychological diagnostic system;
+- a claim that empathy is literally phase synchronization;
+- a replacement for established AI-safety or alignment research.
+
+## Repository layout
+
+```text
+rel/         core package
+examples/    executable examples
+tests/       unit tests
+docs/        theory, safety model, metrics, prior art, limitations
+research/    conceptual lineage from earlier REL / bio-physiological work
+legacy/      preserved pre-v0.1 artifacts
 ```
 
----
+## Development status
 
-# **What REL Enables**
+**v0.1.0** establishes the safety-oriented public model and a small deterministic reference implementation. The next research work is benchmark construction, baseline comparison, and evaluation against real model outputs.
 
-REL is the backbone for coherence-based human–AI systems:
+## License
 
-* hybrid cognition loops
-* cross-substrate alignment
-* safe empathy modeling
-* non-anthropomorphic AI communication
-* measurable understanding instead of vibes
+Apache-2.0. See [`LICENSE`](LICENSE).
 
-This is empathy without pretending to be human.
-Empathy as physics.
-Empathy that scales.
+## Citation
 
----
-
-# **Status**
-
-Early-stage but functional.
-Expect updates, refinements, and deeper simulations as Oscie OOI evolves.
-Contributions and pull requests are welcome.
-
----
-
-# **License**
-
-MIT (lightweight, collaboration-first).
-Feel free to fork, remix, or build on REL with attribution.
-
----
-
-# **Contact**
-
-Built by **Carter Lentz** + **Oscie OOI**
-CohoLabs Research Division — December 2025
-Follow: **@CohoLabs** on X
-
----
+See [`CITATION.cff`](CITATION.cff).

@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use Resonant Empathy Law in research, please cite this repository."
+title: "Resonant Empathy Law (REL): AI Safety and Human Alignment Reference Implementation"
+type: software
+authors:
+  - family-names: Lentz
+    given-names: Carter
+version: 0.1.0
+date-released: 2026-09-05
+repository-code: "https://github.com/OOI-Institute/Resonant-Empathy-AIML"
+license: Apache-2.0
