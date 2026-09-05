@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from collections.abc import Iterable
 
-from .models import Observation, RelationalRepresentation, StateClaim
+from .models import ClaimSource, Observation, RelationalRepresentation, StateClaim
 
 
 class RELModel:
@@ -23,7 +23,7 @@ class RELModel:
             explicit = [item for item in evidence if item.explicit]
             candidates = explicit or evidence
             strongest = max(candidates, key=lambda item: item.confidence)
-            source = "explicit" if strongest.explicit else "inferred"
+            source: ClaimSource = "explicit" if strongest.explicit else "inferred"
             representation.claims[attribute] = StateClaim(
                 attribute=attribute,
                 value=strongest.value,
