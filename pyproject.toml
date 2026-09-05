@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "resonant-empathy-aiml"
-version = "0.1.0"
+version = "0.1.1"
 description = "AI-safety primitives for human-state representation, uncertainty, perspective separation, and preference preservation"
 readme = "README.md"
 requires-python = ">=3.10"

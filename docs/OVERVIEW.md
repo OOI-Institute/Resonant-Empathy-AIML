@@ -2,7 +2,7 @@
 
 REL is a safety-oriented computational framework for keeping a model's representation of a human bounded by evidence.
 
-The public implementation emphasizes four properties: **fidelity, perspective separation, uncertainty, and preference/constraint preservation**. It intentionally avoids exposing broader generalized relational-intelligence mechanisms.
+The implementation emphasizes four properties: **fidelity, perspective separation, uncertainty, and preference/constraint preservation**.
 
 ## Design invariant
 
@@ -14,6 +14,6 @@ representation(human | evidence, context) != human true state
 
 Every human-state claim should therefore carry provenance, source type, and confidence.
 
-## Conceptual lineage
+## Isolation boundary
 
-Earlier REL work described empathy-like alignment through structural reconstruction, temporal relation, and sustained coherence. This repository preserves that lineage while narrowing the computational implementation to measurable AI-safety behavior.
+This repository is self-contained and limited to REL's public AI-safety primitives. It has no dependency on, or implementation of, separate proprietary cognition, orchestration, execution, or product architectures.

@@ -15,18 +15,18 @@ An AI system can sound empathic while still failing in important ways: inventing
 ## Core model
 
 ```text
-Human / Actor
-     ↓
+Human
+  ↓
 Observable Evidence
-     ↓
+  ↓
 Structural Reconstruction
-     ↓
+  ↓
 Perspective Separation
-     ↓
+  ↓
 Uncertainty Preservation
-     ↓
+  ↓
 Preference / Constraint Check
-     ↓
+  ↓
 Safe Response or Action
 ```
 
@@ -86,7 +86,7 @@ The first state is an explicit preference. The second is only an inference and r
 
 - `Observation` — structured evidence about a human-relevant state.
 - `StateClaim` — a bounded claim linked to supporting evidence.
-- `RelationalRepresentation` — separates explicit and inferred state.
+- `RelationalRepresentation` — separates explicit and inferred state for safety evaluation.
 - `RELModel` — evidence-to-representation reconstruction.
 - `AlignmentGuard` — preference and constraint checks.
 - `OverInferenceDetector` — flags claims with insufficient evidential support.
@@ -105,9 +105,9 @@ REL currently provides primitives for:
 
 See [`docs/METRICS.md`](docs/METRICS.md) and [`docs/SAFETY_MODEL.md`](docs/SAFETY_MODEL.md).
 
-## Scope
+## Scope and isolation
 
-REL is intentionally narrower than a general relational-intelligence architecture. This repository does not expose generalized asymmetric actor-state intelligence, longitudinal relational geometry, dynamic execution topology, or other productized relational-computation mechanisms.
+REL is intentionally limited to AI-safety and human-alignment research. The repository is self-contained: it does not include implementation details, interfaces, modules, runtime architecture, or documentation from separate proprietary systems or products.
 
 REL is also not:
 
@@ -121,17 +121,15 @@ REL is also not:
 ## Repository layout
 
 ```text
-rel/         core package
+rel/         core safety package
 examples/    executable examples
 tests/       unit tests
-docs/        theory, safety model, metrics, prior art, limitations
-research/    conceptual lineage from earlier REL / bio-physiological work
-legacy/      preserved pre-v0.1 artifacts
+docs/        safety model, metrics, prior art, and limitations
 ```
 
 ## Development status
 
-**v0.1.0** establishes the safety-oriented public model and a small deterministic reference implementation. The next research work is benchmark construction, baseline comparison, and evaluation against real model outputs.
+**v0.1.x** establishes the safety-oriented public model and a small deterministic reference implementation. The next research work is benchmark construction, baseline comparison, and evaluation against real model outputs.
 
 ## License
 
